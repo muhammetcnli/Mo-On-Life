@@ -1,0 +1,58 @@
+- Make a database with necessary tables
+    - post must have:
+        - id
+        - a title, String
+        - upload date, localDate
+        - tags, Set
+        - content, obviously; String, Lob
+        - Author, String
+        - slug, String; entityde
+        - views, int
+    - necessary tables are:
+        - post
+        - tag
+        - Post_tag (many to many relationship)
+
+- Make the spring entities
+    - Annotate them according to the database
+    - Make them robust
+
+here
+
+- Make the MVC pattern work
+
+- Connect the database with program
+
+- write a simple hello world in index
+
+- Make a header, always stays on top on every page
+
+- Make a footer
+
+- Fetch the posts from database to index page
+    - show them in the upload order, and a title like: "Recent posts, What’s new?"
+    - Make them like a feed, bunch of back to back, in a frame
+        - Frame has:
+            - Title
+            - Content
+            - Date
+            - Tags
+
+- Make the tags clickable, when you cliked program gets the same tagged posts
+
+- Make the post page, where posts fully display
+    - Post page has:
+        - "{The publish date} by {Author}"
+        - The title
+        - tags, clickable
+        - Content
+        - Maybe
+    - Maybe a previous, next button in post page (maybe)
+
+- Make a /admin route, if entered, admin login required
+
+- Make styling for pages, Bootstrap, tailwind etc
+
+- enjoy :)
+
+
