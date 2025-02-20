@@ -25,6 +25,10 @@ here
 
 - write a simple hello world in index
 
+here
+
+- Make the index page with header
+
 - Make a header, always stays on top on every page
 
 - Make a footer

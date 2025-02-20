@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <tr th:if="${posts.empty}">
+        <td colspan="2">No post available</td>
+    </tr>
+    <tr th:each="post : ${posts}">
+        <td><span th:text="${post.title}">Title</span></td>
+        <td><span th:text="${post.author} ?: 'Unknown'">Written By {author}</span></td>
+
+    </tr>
+
+</body>
+</html>

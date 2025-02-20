@@ -46,7 +46,6 @@ public class Post {
     private Set<Tag> tags = new HashSet<>(); // Set allows us to no duplicate tags
 
 
-
     // Hibernate needs empty constructor
     public Post() {
     }
@@ -106,6 +105,10 @@ public class Post {
 
     public int getViewCount() {
         return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
     }
 
     public String getSlug() {
