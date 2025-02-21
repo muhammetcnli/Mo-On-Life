@@ -13,7 +13,9 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    Optional<Post> findByCreatedAtAndSlug(LocalDate createdAt, String slug);
+    Optional<Post> findBySlug(String slug);
 
     List<Post> findTop10ByTags_NameOrderByViewCountDesc(String name);
+
+
 }
