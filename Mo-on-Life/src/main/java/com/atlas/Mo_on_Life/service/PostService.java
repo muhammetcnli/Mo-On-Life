@@ -24,8 +24,8 @@ public class PostService {
         return postRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
-    public Optional<Post> getPostCreatedAtAndSlug(String slug, LocalDate createdAt){
-        return postRepository.findByCreatedAtAndSlug(createdAt, slug);
+    public Optional<Post> getPostSlug(String slug){
+        return postRepository.findBySlug(slug);
     }
 
     public void savePost(Post post){
