@@ -1,19 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mo on Life</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+        .post-title {
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+        }
+        .post-title:hover {
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
 
-    <tr th:if="${posts.empty}">
-        <td colspan="2">No post available</td>
-    </tr>
-    <tr th:each="post : ${posts}">
-        <td><span th:text="${post.title}">Title</span></td>
-        <td><span th:text="${post.author} ?: 'Unknown'">Written By {author}</span></td>
+    <div class="container text-center">
+        <h1 class="mb-4">What's New</h1>
 
-    </tr>
+        <div class="list-group">
+            <a th:each="post : ${posts}" th:href="@{/{year}/{month}/{day}/{slug}(year=${#temporals.format(post.createdAt, 'yyyy')},
+                                                                                 month=${#temporals.format(post.createdAt, 'MM')},
+                                                                                 day=${#temporals.format(post.createdAt, 'dd')},
+                                                                                 slug=${post.slug})}"
+               class="list-group-item list-group-item-action">
+                <h5 class="post-title" th:text="${post.title}"></h5>
+                <small class="text-muted" th:text="${#strings.capitalize(#strings.toLowerCase(T(java.time.Month).of(#temporals.month(post.createdAt)).name))}
+                 + ' ' + ${#temporals.format(post.createdAt, 'dd')}
+                 + ', ' + ${#temporals.format(post.createdAt, 'yyyy')}
+                 + ' by ' + ${post.author}"></small>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
