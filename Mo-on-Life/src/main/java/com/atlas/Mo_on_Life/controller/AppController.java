@@ -2,8 +2,10 @@ package com.atlas.Mo_on_Life.controller;
 
 import com.atlas.Mo_on_Life.entity.Post;
 import com.atlas.Mo_on_Life.entity.Tag;
+import com.atlas.Mo_on_Life.repository.PostRepository;
 import com.atlas.Mo_on_Life.service.PostService;
 import com.atlas.Mo_on_Life.service.TagService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +43,8 @@ public class AppController {
     }
 
     @PostMapping("/post")
-    public String createPost(@ModelAttribute Post post, @RequestParam("tagsInput"), String tagsInput){
+    @Transactional // for database
+    public String createPost(@ModelAttribute Post post, @RequestParam("tagsInput") String tagsInput){
 
         Set<Tag> postTags = new HashSet<>();
 
@@ -50,21 +53,18 @@ public class AppController {
         for (String name: tagNames){
             name = name.trim();
             if (!name.isEmpty()){
-                Optional<Tag> existingTag = tagService.findTagByName(name);
+                Tag tag = tagService.findTagByName(name);
+                if(tag == null){
+                    tag = new Tag(name);
+                    tagService.saveTag(tag);
+                }
 
-
+                postTags.add(tag);
             }
         }
-
-
-        if(post.getTags() != null && !post.getTags().isEmpty()){
-
-            Set<String> parsedTags = Arrays.stream(post.getTags().iterator().next().split(","))
-                    .
-        }
-
-
+        post.setTags(postTags);
         postService.savePost(post);
+
         return "redirect:/";
     }
 }

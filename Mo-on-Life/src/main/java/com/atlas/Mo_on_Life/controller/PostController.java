@@ -20,15 +20,15 @@ public class PostController {
         this.postService = postService;
     }
 
-
-
     // Getting the post via creation date, and slug (title with better url'ing)
-    @GetMapping("/{createdAt}/{slug}")
+    @GetMapping("/{year}/{month}/{day}/{slug}")
     public String viewPost(@PathVariable String slug,
-                           @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAt,
+                           @PathVariable int year,
+                           @PathVariable int month,
+                           @PathVariable int day,
                            Model model){
 
-        Post post = postService.getPostCreatedAtAndSlug(slug, createdAt)
+        Post post = postService.getPostSlug(slug)
                 .orElseThrow(() -> new PostNotFoundException("Post not found"));
         // if post is empty, throws PostNotFoundException. Our custom exception. When thrown the exception returns 404 page
 

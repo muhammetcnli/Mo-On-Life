@@ -18,12 +18,11 @@ public class TagController {
 
     PostService postService;
 
+    @Autowired
     public TagController(TagService tagService, PostService postService) {
         this.tagService = tagService;
         this.postService = postService;
     }
-
-    @Autowired
 
 
     @GetMapping("/{tag}/top-10")
