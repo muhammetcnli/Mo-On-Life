@@ -10,15 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
 public class AppController {
 
-    PostService postService;
-    TagService tagService;
+    private final PostService postService;
+    private final TagService tagService;
 
     @Autowired
     public AppController(PostService postService, TagService tagService) {
@@ -28,42 +29,53 @@ public class AppController {
 
     @GetMapping({"/", "index"})
     public String index1(Model model){
-
         List<Post> posts = postService.getAllPosts(0,20);
         model.addAttribute("posts", posts);
-
         return "index";
     }
 
     @GetMapping("/new")
     public String newPost(Model model){
+        // Create an empty post form object
         model.addAttribute("post", new Post());
+
+        // Get all existing tags for potential suggestions (if needed)
+        List<Tag> allTags = tagService.getAllTags();
+        model.addAttribute("allTags", allTags);
 
         return "post/new";
     }
 
     @PostMapping("/post")
-    @Transactional // for database
-    public String createPost(@ModelAttribute Post post, @RequestParam("tagsInput") String tagsInput){
+    @Transactional
+    public String createPost(
+            @ModelAttribute Post post,
+            @RequestParam("tagsInput") String tagsInput,
+            RedirectAttributes redirectAttributes) {
 
+
+        // Process tags
         Set<Tag> postTags = new HashSet<>();
-
         String[] tagNames = tagsInput.split(",");
 
-        for (String name: tagNames){
+        for (String name: tagNames) {
             name = name.trim();
-            if (!name.isEmpty()){
+            if (!name.isEmpty()) {
                 Tag tag = tagService.findTagByName(name);
-                if(tag == null){
+                if (tag == null) {
                     tag = new Tag(name);
                     tagService.saveTag(tag);
                 }
-
                 postTags.add(tag);
             }
         }
+
+        // Set tags and save post
         post.setTags(postTags);
         postService.savePost(post);
+
+        // Add success message
+        redirectAttributes.addFlashAttribute("successMessage", "Post successfully created!");
 
         return "redirect:/";
     }

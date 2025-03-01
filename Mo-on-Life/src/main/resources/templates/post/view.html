@@ -1,12 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${post.title}">Default Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .post-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 1rem;
+        }
+
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .post-views {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .fa-eye {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>DEneme</h1>
+<!-- Header -->
+<div th:replace="~{post/fragments/header :: header}"></div>
+
+<!-- Blog İçeriği -->
+<div class="post-container">
+    <h1 class="post-title" th:text="${post.title}">Post Title</h1>
+    <div class="post-meta">
+        <span class="post-author" th:text="${post.author}">Author Name</span> •
+        <span class="post-views"><i class="fa fa-eye"></i> <span th:text="${post.viewCount}">0</span> Views</span>
+    </div>
+    <div class="post-content" th:utext="${post.content}">
+        <p>Content displayed here...</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="~{post/fragments/footer :: footer}"></div>
 
 </body>
 </html>

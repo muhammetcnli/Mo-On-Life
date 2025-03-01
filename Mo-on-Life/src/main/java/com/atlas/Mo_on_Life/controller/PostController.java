@@ -34,7 +34,7 @@ public class PostController {
 
         postService.incrementViewCount(post); // increments and saves the post
 
-        model.addAttribute("post", post); // adds post to the model
+        model.addAttribute("post", post);// adds post to the model
         return "post/view";
     }
 

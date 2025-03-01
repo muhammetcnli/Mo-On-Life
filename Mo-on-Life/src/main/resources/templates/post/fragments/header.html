@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <header th:fragment="header" class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">MO ON LIFE</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/archive" class="nav-link">Archive</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                <li sec:authorize="isAnonymous()">
+                    <a href="/login" class="login-red">Login</a>
+                </li>
+                <li sec:authorize="isAuthenticated()"><a href="/new" class="login-red">New</a></li>
+            </ul>
+        </div>
+    </header>
+</body>
+</html>

@@ -2,22 +2,105 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Post</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create New Post - Mo on Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/easymde/2.18.0/easymde.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easymde/2.18.0/easymde.min.js"></script>
 </head>
 <body>
+<div th:replace="~{post/fragments/header :: header}"></div>
 
-<h1>Form</h1>
-<hr>
-<form action="#" th:action="@{/post}" th:object="${post}" method="post">
-  <p>Title: <input type="text" th:field="*{title}"/></p>
-  <p>Author: <input type="text" th:field="*{author}"/></p>
-  <p>Content: <textarea th:field="*{content}" rows="5" cols="30"></textarea></p>
+<div class="container">
+    <div class="content-header">
+        <h1>Create a New Post</h1>
+    </div>
+    <div class="content-body">
+        <form th:action="@{/post}" method="post" class="post-form">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter a descriptive title" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" placeholder="Author">
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="tagsInput">Tags</label>
+                <div class="tag-container" id="tag-container">
+                    <input type="text" id="tag-input" placeholder="Add tags and press Enter">
+                </div>
+                <input type="hidden" id="tagsInput" name="tagsInput">
+            </div>
+            <div class="button-group">
+                <a th:href="@{/}" class="secondary-button">Cancel</a>
+                <button type="submit" class="primary-button">Publish Post</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-  <p>Tags: <input type="text" th:name="tagsInput" placeholder="Comma-Seperated tags"></p>
+<div th:replace="~{post/fragments/footer :: footer}"></div>
 
-  <button type="submit">Create</button>
+<script>
+    const easyMDE = new EasyMDE({
+        element: document.getElementById('content'),
+        spellChecker: false,
+        autosave: {
+            enabled: true,
+            uniqueId: 'post-content-draft',
+            delay: 1000,
+        },
+        placeholder: 'Write your post content here using Markdown...',
+        toolbar: [
+            'bold', 'italic', 'heading', '|',
+            'quote', 'unordered-list', 'ordered-list', '|',
+            'link', 'image', '|',
+            'preview', 'side-by-side', 'fullscreen', '|',
+            'guide'
+        ]
+    });
 
-</form>
+    const tagContainer = document.getElementById('tag-container');
+    const tagInput = document.getElementById('tag-input');
+    const hiddenTagInput = document.getElementById('tagsInput');
+    const tags = [];
 
+    function renderTags() {
+        document.querySelectorAll('.tag').forEach(tag => tag.remove());
+        tags.forEach((tag, index) => {
+            const tagElement = document.createElement('div');
+            tagElement.className = 'tag';
+            tagElement.innerHTML = `<span>${tag}</span> <span class="tag-delete" data-index="${index}">×</span>`;
+            tagContainer.insertBefore(tagElement, tagInput);
+        });
+        hiddenTagInput.value = tags.join(',');
+    }
+
+    tagInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const tagText = tagInput.value.trim();
+            if (tagText && !tags.includes(tagText)) {
+                tags.push(tagText);
+                renderTags();
+                tagInput.value = '';
+            }
+        }
+    });
+
+    tagContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tag-delete')) {
+            tags.splice(parseInt(e.target.dataset.index), 1);
+            renderTags();
+        }
+    });
+</script>
 </body>
 </html>

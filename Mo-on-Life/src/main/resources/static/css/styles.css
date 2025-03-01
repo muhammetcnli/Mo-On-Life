@@ -5,11 +5,79 @@
     --border-color: #eee;
 }
 
+
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+/* New sayfası için stiller */
+.new-post-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.new-post-header {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.new-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.new-post-form label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.new-post-form input,
+.new-post-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: white;
+}
+
+.new-post-form textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.new-post-form button {
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.new-post-form button:hover {
+    background-color: darkred;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .new-post-container {
+        padding: 1rem;
+    }
+}
+
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -39,6 +107,20 @@ body {
     font-weight: 700;
     color: var(--primary-color);
     text-decoration: none;
+}
+
+.fa-eye {
+    margin-left: 5px;
+    color: #888; /* Gri ton */
+}
+
+.login-red{
+text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .nav-menu {
@@ -202,6 +284,138 @@ body {
     }
 
     .nav-menu {
+        gap: 1rem;
+    }
+}
+
+/* New Post Sayfası İçin Stiller */
+.post-form {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-form h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: white;
+}
+
+.form-group textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+/* EasyMDE Özelleştirme */
+.EasyMDEContainer {
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+/* Etiket (Tags) Alanı */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: white;
+    min-height: 40px;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.tag-delete {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Butonlar */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.primary-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.primary-button:hover {
+    background-color: darkred;
+}
+
+.secondary-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .post-form {
+        padding: 1rem;
+    }
+
+    .button-group {
+        flex-direction: column;
         gap: 1rem;
     }
 }

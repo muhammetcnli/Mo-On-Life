@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <footer th:fragment="footer" class="footer">
+        <div class="container">
+            <p>© <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2025</span> Mo on Life. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
