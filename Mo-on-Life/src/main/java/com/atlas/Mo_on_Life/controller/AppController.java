@@ -47,36 +47,39 @@ public class AppController {
     }
 
     @PostMapping("/post")
-    @Transactional
     public String createPost(
             @ModelAttribute Post post,
             @RequestParam("tagsInput") String tagsInput,
             RedirectAttributes redirectAttributes) {
 
+        try {
+            // Process tags
+            Set<Tag> postTags = new HashSet<>();
+            String[] tagNames = tagsInput.split(",");
 
-        // Process tags
-        Set<Tag> postTags = new HashSet<>();
-        String[] tagNames = tagsInput.split(",");
-
-        for (String name: tagNames) {
-            name = name.trim();
-            if (!name.isEmpty()) {
-                Tag tag = tagService.findTagByName(name);
-                if (tag == null) {
-                    tag = new Tag(name);
-                    tagService.saveTag(tag);
+            for (String name : tagNames) {
+                name = name.trim();
+                if (!name.isEmpty()) {
+                    Tag tag = tagService.findTagByName(name);
+                    if (tag == null) {
+                        tag = new Tag(name);
+                        tagService.saveTag(tag);
+                    }
+                    postTags.add(tag);
                 }
-                postTags.add(tag);
             }
+
+            // Set tags and save post
+            post.setTags(postTags);
+            postService.savePost(post);
+
+            // Add success message
+            redirectAttributes.addFlashAttribute("successMessage", "Post successfully created!");
+
+            return "redirect:/";
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred: " + e.getMessage());
+            return "redirect:/new";
         }
-
-        // Set tags and save post
-        post.setTags(postTags);
-        postService.savePost(post);
-
-        // Add success message
-        redirectAttributes.addFlashAttribute("successMessage", "Post successfully created!");
-
-        return "redirect:/";
     }
 }

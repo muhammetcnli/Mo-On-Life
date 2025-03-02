@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/easymde/2.18.0/easymde.min.js"></script>
 </head>
 <body>
+
 <div th:replace="~{post/fragments/header :: header}"></div>
 
 <div class="container">
@@ -18,18 +19,21 @@
         <h1>Create a New Post</h1>
     </div>
     <div class="content-body">
-        <form th:action="@{/post}" method="post" class="post-form">
+        <div th:if="${errorMessage}" class="error-message">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <form th:action="@{/post}" th:object="${post}" method="post" class="post-form">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" placeholder="Enter a descriptive title" required>
+                <input type="text" id="title" th:field="*{title}" placeholder="Enter a descriptive title" required>
             </div>
             <div class="form-group">
                 <label for="author">Author</label>
-                <input type="text" id="author" name="author" placeholder="Author">
+                <input type="text" id="author" th:field="*{author}" placeholder="Author">
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea id="content" name="content" rows="10"></textarea>
+                <textarea id="content" th:field="*{content}" rows="10"></textarea>
             </div>
             <div class="form-group">
                 <label for="tagsInput">Tags</label>
@@ -70,7 +74,7 @@
     const tagContainer = document.getElementById('tag-container');
     const tagInput = document.getElementById('tag-input');
     const hiddenTagInput = document.getElementById('tagsInput');
-    const tags = [];
+    let tags = [];
 
     function renderTags() {
         document.querySelectorAll('.tag').forEach(tag => tag.remove());
@@ -102,5 +106,6 @@
         }
     });
 </script>
+
 </body>
 </html>
