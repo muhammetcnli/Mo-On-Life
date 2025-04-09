@@ -29,7 +29,7 @@ public class AppController {
 
     @GetMapping({"/", "index"})
     public String index1(Model model){
-        List<Post> posts = postService.getAllPosts(0,20);
+        List<Post> posts = postService.getAllPostsSortedByDate();
         model.addAttribute("posts", posts);
         return "index";
     }

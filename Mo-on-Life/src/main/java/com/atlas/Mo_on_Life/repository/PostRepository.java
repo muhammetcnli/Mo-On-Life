@@ -15,6 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> findBySlug(String slug);
 
+    List<Post> findAllByOrderByCreatedAtDesc();
     List<Post> findTop10ByTags_NameOrderByViewCountDesc(String name);
 
 

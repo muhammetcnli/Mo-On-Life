@@ -24,6 +24,10 @@ public class PostService {
         return postRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
+    public List<Post> getAllPostsSortedByDate() {
+        return postRepository.findAllByOrderByCreatedAtDesc();
+    }
+
     public Optional<Post> getPostSlug(String slug){
         return postRepository.findBySlug(slug);
     }
