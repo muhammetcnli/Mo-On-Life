@@ -9,10 +9,10 @@ Mo on Life is a personal blog platform where only the admin can create and manag
 - Admin-only access for creating and managing posts.
 
 ### Technologies Used
-Backend: Java, Spring Boot, Spring Security, Hibernate
-Frontend: Thymeleaf, HTML, CSS, JavaScript
-Database: MySQL
-Build Tool: Maven
+- Backend: Java, Spring Boot, Spring Security, Hibernate
+- Frontend: Thymeleaf, HTML, CSS, JavaScript
+- Database: MySQL
+- Build Tool: Maven
 
 ### Setup Instructions
 1. Clone the Repository:
